@@ -13,5 +13,4 @@ public enum BootstrapVersion {
 	public String getVersion() {
 		return this.versionTheme;
 	}
-
 }

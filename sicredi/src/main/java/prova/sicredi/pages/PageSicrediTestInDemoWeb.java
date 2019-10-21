@@ -16,18 +16,21 @@ import prova.sicredi.common.utils.WebDriverFactory;
 
 public class PageSicrediTestInDemoWeb extends BasePageObject {
 	
-	protected final static String MAIN_URL 				= Urls.GROCERYCRUD_DEMO;
-	protected final static String XPATH_SEARCH 			= "//*[@id=\"gcrud-search-form\"]/div[1]/div[2]/a[3]/i";
-	protected final static String XPATH_CHECKBOX		= "//*[@id=\"gcrud-search-form\"]/div[2]/table/thead/tr[2]/td[1]/div/input";
-	protected final static String XPATH_DELETE_BUTTON 	= "//*[@id=\"gcrud-search-form\"]/div[2]/table/thead/tr[2]/td[2]/div[1]/a/span";
+	protected final static String MAIN_URL 						= Urls.GROCERYCRUD_DEMO;
+	protected final static String XPATH_MSG_AFTER_DELETE		= "/html/body/div[3]/span[3]/p";
+	protected final static String XPATH_SEARCH 					= "//*[@id=\"gcrud-search-form\"]/div[1]/div[2]/a[3]/i";
+	protected final static String XPATH_CHECKBOX				= "//*[@id=\"gcrud-search-form\"]/div[2]/table/thead/tr[2]/td[1]/div/input";
+	protected final static String XPATH_DELETE_BUTTON 			= "//*[@id=\"gcrud-search-form\"]/div[2]/table/thead/tr[2]/td[2]/div[1]/a/span";
 	protected final static String XPATH_CONFIRM_DELETE_BUTTON = "/html/body/div[2]/div[2]/div[3]/div/div/div[3]/button[2]";
-	protected final static String SEARCH_NAME		 	= "search";
-	protected final static String ALERT_POPUP			= "/html/body/div[2]/div[2]/div[3]/div/div/div[2]/p[2]";//"alert-delete-multiple-one";
+	protected final static String SEARCH_NAME		 			= "search";
+	protected final static String ALERT_POPUP					= "/html/body/div[2]/div[2]/div[3]/div/div/div[2]/p[2]";//"alert-delete-multiple-one";
 	private AddCustomerPage addCustomerPage;
 	protected final By searchLocator 		= By.name(SEARCH_NAME);
 	protected final By deleteButtonLocator 	= By.xpath(XPATH_DELETE_BUTTON);
 	protected final By alertLocator			= By.xpath(ALERT_POPUP);
+	protected final By messageAfterDeleteLocator = By.xpath(XPATH_MSG_AFTER_DELETE);
 	protected String messageAfterDelete;
+	protected String lastMessageAfterConfirmDelete;
 	
 		
 	public String getMessageAfterDelete() {
@@ -45,6 +48,7 @@ public class PageSicrediTestInDemoWeb extends BasePageObject {
 	@FindBy(className = "alert-delete-multiple")	protected WebElement deleteMessage;
 	@FindBy(xpath = XPATH_CONFIRM_DELETE_BUTTON)	protected WebElement confirmDeleteButton;
 	@FindBy(xpath = "/html/body/div[4]/span[3]/p")  protected WebElement textAfterDelete;
+	@FindBy(xpath = XPATH_MSG_AFTER_DELETE)			protected WebElement dialogMessageAfterDelete;
 		
 	public PageSicrediTestInDemoWeb(WebDriver driver, ResourceBrowserDriverPath resource) {
 		super(driver, resource);
@@ -92,11 +96,12 @@ public class PageSicrediTestInDemoWeb extends BasePageObject {
 	public void clickDeleteButton() {
 		waitForElementToAppear(deleteButtonLocator);
 		deleteButton.click();
+		waitMilliSeconds(100);
 	}
 	
 	public String getTextPopupDeleteAlert() {		
 		gotoFrame();	
-		setLatestAlertText(deleteMessage.getText());		
+		setLatestAlertText(getDriver().getPageSource());	//csv	
 		return getLatestAlertText();
 	}
 	
@@ -107,6 +112,17 @@ public class PageSicrediTestInDemoWeb extends BasePageObject {
 	
 	public String getTextAfterDeleteToConfirm() {
 		return this.messageAfterDelete;
+	}
+	
+	public void setLastTextAfterConfirmDelete() {
+		//waitForElementToAppear(messageAfterDeleteLocator);
+		gotoFrame();
+		clickFrame();
+		this.lastMessageAfterConfirmDelete = getDriver().getPageSource();//CSV dialogMessageAfterDelete.getText();		
+	}
+	
+	public String getLastTextAfterDelete() {
+		return this.lastMessageAfterConfirmDelete;
 	}
 		
 	//Validando a classe de page object alvo do teste.

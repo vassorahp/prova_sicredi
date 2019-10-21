@@ -11,8 +11,7 @@ public class WebDriverFactory {
 	public WebDriverFactory() {		
 	}
 		
-	public WebDriver getDriver(BrowserName browser) throws Exception {
-		
+	public WebDriver getDriver(BrowserName browser) throws Exception {		
 		if (!browser.isSupported()) {
 			throw new Exception("O Browser "+browser+" ainda não está suportado nessa versão.");
 		}
@@ -23,10 +22,13 @@ public class WebDriverFactory {
 		
 		if (BrowserName.CHROME == browser) {			
 			return new ChromeDriver();
+		}
+		else {
+			return null;
 		}		
-		return null;
 	}
 
+	//Para propósito de validação da classe apenas.
 	public static void main(String[] args) throws Exception {
 		WebDriverFactory factory = new WebDriverFactory();
 		ResourceBrowserDriverPath resource = new ResourceBrowserDriverPath(BrowserName.CHROME);

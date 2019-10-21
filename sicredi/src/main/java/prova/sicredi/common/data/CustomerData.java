@@ -13,8 +13,7 @@ public class CustomerData {
 	private String country;
 	private String creditLimit;
 	
-	public CustomerData() {
-		
+	public CustomerData() {		
 	}
 	
 	public CustomerData( 

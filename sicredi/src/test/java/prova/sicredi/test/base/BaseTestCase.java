@@ -14,17 +14,17 @@ public abstract class BaseTestCase {
 	
 	protected  WebDriverFactory webDriverFactory = new WebDriverFactory();
 	protected  ResourceBrowserDriverPath resource;
+	
 	private BrowserName browserName;
 	private WebDriver driver;
-		
+	
 	public abstract void beforeTest();
 	public abstract void afterTest();
 	public abstract void additionalConditionBeforeTest();
 	public abstract void configWebBrowserName();
 
 	@Before
-	public void preTest() {
-		
+	public void preTest() {		
 		configWebBrowserName();
 		setResource(new ResourceBrowserDriverPath(getBrowserName()));
 		try {
@@ -38,11 +38,9 @@ public abstract class BaseTestCase {
 
 	@After
 	public void posTest() {
-		afterTest();		
-		if(null != getDriver()) {			
-			if(null != resource) {
-				resource.killDriver();
-			}
+		afterTest();
+		if(null != resource) {
+			resource.killDriver();
 		}
 	}
 
@@ -51,8 +49,7 @@ public abstract class BaseTestCase {
 	}
 
 	@AfterClass
-	public static void afterClass() {
-	
+	public static void afterClass() {	
 	}
 	
 	public WebDriver buildDriver() {

@@ -28,22 +28,29 @@ public class BaseDesafioTestCase extends BaseTestCase{
 	public PageSicrediTestInDemoWeb getPage() {
 		return page;
 	}
+	
+	//Passos do desafio 1
+	public void execucao_desafio01_passos_1_ao_5() {
+		//Passos:
+		//1. Acessa a página
+		getPage().openPage();	
 		
-	public void execucao_desafio() {
-		//Acessa a página
-		getPage().openPage();		
-		//Seleciona a V4
-		getPage().clickSelectVersion();
+		//2. Seleciona a V4
+		getPage().clickSelectVersion();		
 		getPage().selectTargetVersion(version);
-		//Clica em Add CustomerO
+		
+		//3. Clica em Add CustomerO
 		getPage().clickAddCustomer();
-		//Preenche o formulário
+		
+		//4. Preenche o formulário
 		getPage().getAddCustomerPage().populateCustomerData(customerData);
-		//Clica no botão Save
+				
+		//5. Clica no botão Save
 		getPage().getAddCustomerPage().clickSaveButton();
 				
 	}
 	
+	//6. Valida por Asser a mensagem de que o dado foi armazenado no BD
 	public void assertMessageDataStoredIntoDb() {
 		//Valida mensagem
 		boolean foundText = page.getAddCustomerPage().foundMessage(Messages.DATA_STORED_INTO_DB);		
@@ -60,6 +67,5 @@ public class BaseDesafioTestCase extends BaseTestCase{
 
 	@Override
 	public void additionalConditionBeforeTest() {		
-		
 	}
 }
