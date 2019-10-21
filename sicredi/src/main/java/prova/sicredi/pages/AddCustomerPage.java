@@ -28,7 +28,7 @@ public class AddCustomerPage extends BasePageObject{
 	@FindBy(id ="field-creditLimit")		protected WebElement creditLimitInput;
 	@FindBy(id ="form-button-save")			protected WebElement saveButton;
 	@FindBy(id = REPORT_SUCCESS_ID)			protected WebElement reportResult;
-	
+	@FindBy(id = "save-and-go-back-button")	protected WebElement goBackButton;
 			
 	public AddCustomerPage(WebDriver driver, ResourceBrowserDriverPath resource) {
 		super(driver, resource);		
@@ -40,12 +40,12 @@ public class AddCustomerPage extends BasePageObject{
 	
 	public void addLastName(String lastName) {
 		contactLastNameInput.sendKeys(lastName);
-	}	
+	}
 	
 	public void addFirstName(String firstName) {
 		contactFirstNameInput.sendKeys(firstName);
 	}	
-	
+
 	public void addPhone(String phone) {
 		phoneInput.sendKeys(phone);
 	}	
@@ -84,6 +84,10 @@ public class AddCustomerPage extends BasePageObject{
 	
 	public void clickSaveButton() {
 		saveButton.click();
+	}
+	
+	public void clickGoBackToList() {
+		goBackButton.click();
 	}
 	
 	public boolean foundMessage(String message) {		

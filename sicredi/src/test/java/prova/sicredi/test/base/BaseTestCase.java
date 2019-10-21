@@ -19,6 +19,7 @@ public abstract class BaseTestCase {
 		
 	public abstract void beforeTest();
 	public abstract void afterTest();
+	public abstract void additionalConditionBeforeTest();
 	public abstract void configWebBrowserName();
 
 	@Before
@@ -31,14 +32,14 @@ public abstract class BaseTestCase {
 		} catch (Exception e) {
 			setDriver(null);
 		}		
-		beforeTest();		
+		beforeTest();
+		additionalConditionBeforeTest();
 	}
 
 	@After
 	public void posTest() {
 		afterTest();		
-		if(null != getDriver()) {
-			getDriver().quit();
+		if(null != getDriver()) {			
 			if(null != resource) {
 				resource.killDriver();
 			}
